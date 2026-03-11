@@ -5,6 +5,7 @@
 | Mục | Chi tiết |
 |---|---|
 | **Môn học** | Nhập môn Học Máy |
+| **Mã môn học** | *(Vui lòng cập nhật mã môn)* |
 | **Trường** | Đại học Bách Khoa TP.HCM (HCMUT) |
 | **Học kỳ** | HK2 - Năm học 2025-2026 |
 | **GVHD** | *(Vui lòng cập nhật tên GVHD)* |
