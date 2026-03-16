@@ -1,5 +1,7 @@
 # Bài Tập Lớn Môn Học Máy — Travel Insurance Prediction Pipeline
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/VietAnh1803/HCMUT_ML_Travel_Insurance_Pipeline/blob/main/notebooks/tabular_data_pipeline.ipynb)
+
 ## Thông tin chung
 
 | Mục | Chi tiết |
