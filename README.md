@@ -1,6 +1,6 @@
 # Bài Tập Lớn Môn Học Máy — Adult Census Income Prediction Pipeline
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/VietAnh1803/HCMUT_ML_Travel_Insurance_Pipeline/blob/main/notebooks/tabular_data_pipeline.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/VietAnh1803/HCMUT_ML_AdultCensusIncome_Pipeline/blob/main/notebooks/tabular_data_pipeline.ipynb)
 
 ## Thông tin chung
 
@@ -37,7 +37,7 @@ Xây dựng hệ thống học máy (Machine Learning Pipeline) toàn diện và
 
 1. Mở [Google Colab](https://colab.research.google.com/)
 2. Chọn hộp thoại **File → Open notebook → GitHub**
-3. Nhập đường dẫn Repository: `https://github.com/VietAnh1803/HCMUT_ML_Travel_Insurance_Pipeline`
+3. Nhập đường dẫn Repository: `https://github.com/VietAnh1803/HCMUT_ML_AdultCensusIncome_Pipeline`
 4. Mở trực tiếp file `notebooks/tabular_data_pipeline.ipynb`
 5. Bấm chọn **Runtime → Run all (Chạy tất cả)** để mô hình tự động kết xuất báo cáo cuối cùng.
 
@@ -49,7 +49,7 @@ Xây dựng hệ thống học máy (Machine Learning Pipeline) toàn diện và
 ## Cấu trúc thư mục Nộp Bài
 
 ```
-HCMUT_ML_Travel_Insurance_Pipeline/
+HCMUT_ML_AdultCensusIncome_Pipeline/
 ├── notebooks/
 │   └── tabular_data_pipeline.ipynb    # Code chạy chính toàn bộ quy trình
 ├── features/                          # Thư mục lưu Model & Vector Đặc trưng
