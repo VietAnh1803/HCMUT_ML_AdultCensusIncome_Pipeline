@@ -52,7 +52,7 @@ Xây dựng hệ thống học máy (Machine Learning Pipeline) toàn diện và
 HCMUT_ML_Travel_Insurance_Pipeline/
 ├── notebooks/
 │   └── tabular_data_pipeline.ipynb    # Code chạy chính toàn bộ quy trình
-├── features/                          # Thư mục lưu Model & Vector 特徵
+├── features/                          # Thư mục lưu Model & Vector Đặc trưng
 │   ├── X_train_processed.npy
 │   ├── y_train_resampled.npy
 │   ├── X_test_processed.npy
