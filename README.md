@@ -5,7 +5,7 @@
 ## Thông tin chung
 
 | Mục | Chi tiết |
-|---|---|
+| --- | --- |
 | **Môn học** | Nhập môn Học Máy |
 | **Mã môn học** | *(Vui lòng cập nhật mã môn)* |
 | **Trường** | Đại học Bách Khoa TP.HCM (HCMUT) |
@@ -17,9 +17,9 @@
 Xây dựng hệ thống học máy (Machine Learning Pipeline) toàn diện và mạnh mẽ để giải quyết bài toán **Dự đoán thu nhập cá nhân >50K$** (Adult Census Income). Dự án đáp ứng 100% các tiêu chí nghiêm ngặt từ đồ án học phần:
 
 - **Khám phá dữ liệu (EDA):** Tự động truy xuất Boxplot, Heatmap Tương quan, CountPlot.
-- **Tiền xử lý (Imputation & Encoding):** Xử lý quy mô lớn các giá trị khuyết mã `?` bằng `SimpleImputer`, tự động nhúng `OneHotEncoder` và `StandardScaler`.
+- **Tiền xử lý siêu linh hoạt (Dynamic Pipeline):** Tùy chỉnh tự động giữa `StandardScaler` và `MinMaxScaler`, tích hợp Giảm chiều dữ liệu `PCA (Principal Component Analysis)`. Xử lý giá trị khuyết mã `?` bằng `SimpleImputer` và `OneHotEncoder`.
 - **Xử lý Dữ liệu Mất cân bằng (Imbalanced):** Can thiệp tỷ lệ với **SMOTE** (Synthetic Minority Over-sampling Technique).
-- **So sánh Đấu trường Mô hình (Model Comparison):** Đánh giá song song giữa `Logistic Regression`, `Random Forest`, và `LightGBM`.
+- **So sánh Đấu trường Mô hình (Model Comparison):** Đánh giá song song đa bộ tiền xử lý trên `Logistic Regression`, `Linear SVM`, `Random Forest`, và `LightGBM`.
 - **Nghiên cứu Nâng cao (Deep Learning):** Áp dụng Mạng Nơ-ron `MLP PyTorch` kết hợp `Class Weights`.
 - **Trực quan hóa Hoàn hảo:** Tự động xuất biểu đồ Bar Chart so sánh F1/AUC/Accuracy và Heatmap ma trận nhầm lẫn (Confusion Matrix).
 - **Xuất đặc trưng (Features Exporting):** Rút trích Vector dữ liệu đã xử lý ra định dạng `.npy` (Numpy Array).
@@ -48,7 +48,7 @@ Xây dựng hệ thống học máy (Machine Learning Pipeline) toàn diện và
 
 ## Cấu trúc thư mục Nộp Bài
 
-```
+```text
 HCMUT_ML_AdultCensusIncome_Pipeline/
 ├── notebooks/
 │   └── tabular_data_pipeline.ipynb    # Code chạy chính toàn bộ quy trình
@@ -62,3 +62,5 @@ HCMUT_ML_AdultCensusIncome_Pipeline/
 ├── mlAssignments_v1.1.pdf             # Yêu cầu đề bài
 └── README.md                          # Hướng dẫn chi tiết
 ```
+
+> ⚠️ **Lưu ý Quan Trọng Trước Khi Nộp Bài:** Đề bài yêu cầu nộp **Báo cáo PDF**. Báo cáo gốc được viết bằng file Markdown (`reports/BaoCao_AdultCensusIncome.md`), bạn hãy dùng phần mềm hoặc tiện ích mở rộng (như Print to PDF trên Chrome/VS Code) để xuất báo cáo đó ra file `.pdf` trước khi nén file zip nộp cho giảng viên. Ngoài ra đừng quên cập nhật *Tên Giảng Viên* và *Mã Môn Học* ở trên.
