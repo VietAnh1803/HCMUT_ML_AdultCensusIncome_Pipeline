@@ -63,4 +63,3 @@ HCMUT_ML_AdultCensusIncome_Pipeline/
 └── README.md                          # Hướng dẫn chi tiết
 ```
 
-> ⚠️ **Lưu ý Quan Trọng Trước Khi Nộp Bài:** Đề bài yêu cầu nộp **Báo cáo PDF**. Báo cáo gốc được viết bằng file Markdown (`reports/BaoCao_AdultCensusIncome.md`), bạn hãy dùng phần mềm hoặc tiện ích mở rộng (như Print to PDF trên Chrome/VS Code) để xuất báo cáo đó ra file `.pdf` trước khi nén file zip nộp cho giảng viên. Ngoài ra đừng quên cập nhật *Tên Giảng Viên* và *Mã Môn Học* ở trên.
