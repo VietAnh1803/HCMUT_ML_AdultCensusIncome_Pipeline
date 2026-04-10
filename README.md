@@ -28,7 +28,7 @@ Xây dựng hệ thống học máy (Machine Learning Pipeline) toàn diện và
 
 - **Tên dataset**: Adult Census Income
 - **Nguồn Kaggle**: [uciml/adult-census-income](https://www.kaggle.com/datasets/uciml/adult-census-income)
-- **Kích thước**: Trọng tải hơn 48.000 mẫu với 15 cấu trúc đặc trưng phong phú.
+- **Kích thước**: 32.561 mẫu với 15 thuộc tính (14 features + 1 target).
 - **Phương thức tải**: Tự động thông qua thư viện `kagglehub` (Không cần Mount Drive thủ công).
 
 ## Hướng dẫn chạy Notebook
@@ -62,4 +62,3 @@ HCMUT_ML_AdultCensusIncome_Pipeline/
 ├── mlAssignments_v1.1.pdf             # Yêu cầu đề bài
 └── README.md                          # Hướng dẫn chi tiết
 ```
-
