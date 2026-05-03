@@ -3,4 +3,3 @@ __pycache__/
 *.zip
 features/*.pkl
 features/*.pth
-reports/
