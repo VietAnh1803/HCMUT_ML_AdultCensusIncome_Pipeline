@@ -6,15 +6,17 @@
 
 | Mục | Chi tiết |
 | --- | --- |
-| **Môn học** | Nhập môn Học Máy |
-| **Mã môn học** | *(Vui lòng cập nhật mã môn)* |
-| **Trường** | Đại học Bách Khoa TP.HCM (HCMUT) |
+| **Môn học** | Học Máy |
+| **Mã môn học** | CO3117 |
+| **Trường** | Trường đại học Bách Khoa - ĐHQG Thành phố Hồ Chí Minh |
 | **Học kỳ** | HK2 - Năm học 2025-2026 |
-| **GVHD** | *(Vui lòng cập nhật tên GVHD)* |
+| **GVHD** | TS. Trương Vĩnh Lân |
+| **Nhóm** | 9 |
+| **Lớp** | L01 |
 
 ## Mục tiêu Báo cáo
 
-Xây dựng hệ thống học máy (Machine Learning Pipeline) toàn diện và mạnh mẽ để giải quyết bài toán **Dự đoán thu nhập cá nhân >50K$** (Adult Census Income). Dự án đáp ứng 100% các tiêu chí nghiêm ngặt từ đồ án học phần:
+Xây dựng hệ thống học máy (Machine Learning Pipeline) toàn diện và mạnh mẽ để giải quyết bài toán **Dự đoán thu nhập cá nhân >50K$** (Adult Census Income). Dự án đáp ứng các tiêu chí sau:
 
 - **Khám phá dữ liệu (EDA):** Tự động truy xuất Boxplot, Heatmap Tương quan, CountPlot.
 - **Tiền xử lý siêu linh hoạt (Dynamic Pipeline):** Tùy chỉnh tự động giữa `StandardScaler` và `MinMaxScaler`, tích hợp Giảm chiều dữ liệu `PCA (Principal Component Analysis)`. Xử lý giá trị khuyết mã `?` bằng `SimpleImputer` và `OneHotEncoder`.
