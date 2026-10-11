@@ -1,0 +1,127 @@
+"""Build documentation and a readable notebook from the completed experiment."""
+import hashlib
+import json
+from pathlib import Path
+import sys
+
+import nbformat as nbf
+from nbclient import NotebookClient
+import numpy as np
+import pandas as pd
+from sklearn.metrics import average_precision_score
+
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / 'reports/improved'
+report = json.loads((OUT / 'metrics.json').read_text())
+classic, mlp = report['selection']['best_classic'], report['selection']['best_mlp']
+base_c, base_d = report['test']['legacy_lightgbm'], report['test']['legacy_mlp']
+best_c, best_d = report['test'][classic], report['test'][mlp]
+predictions = pd.read_csv(OUT / 'test_predictions.csv')
+rng = np.random.default_rng(42)
+intervals = {}
+for old, new in [('legacy_lightgbm', classic), ('legacy_mlp', mlp)]:
+    delta_acc, delta_ap = [], []
+    target = predictions.target.to_numpy()
+    p_old, p_new = predictions[old].to_numpy(), predictions[new].to_numpy()
+    old_t, new_t = report['test'][old]['threshold'], report['test'][new]['threshold']
+    for _ in range(500):
+        ids = rng.integers(0, len(target), len(target))
+        delta_acc.append(float(np.mean((p_new[ids] >= new_t) == target[ids]) -
+                               np.mean((p_old[ids] >= old_t) == target[ids])))
+        delta_ap.append(float(average_precision_score(target[ids], p_new[ids]) -
+                              average_precision_score(target[ids], p_old[ids])))
+    intervals[new] = {'paired_accuracy_delta_95_percentile': np.quantile(delta_acc, [.025, .975]).tolist(),
+                      'paired_ap_delta_95_percentile': np.quantile(delta_ap, [.025, .975]).tolist(),
+                      'bootstrap_samples': 500}
+(OUT / 'paired_bootstrap.json').write_text(json.dumps(intervals, indent=2) + '\n')
+
+lines = ['# Adult Income: ML and Deep Learning Improvement', '',
+         'Measured on 11 October 2026 on CPU. This is a post-coursework extension with AI assistance.', '',
+         '## Evaluation protocol', '',
+         'The original notebook compared configurations on its test split and then chose the best one. '
+         'That test was therefore used for model selection. Historical scores remain in the original report; '
+         'they are not treated as an untouched test or used to calculate the improvements below.', '',
+         'This extension uses the official UCI `adult.data` for training and validation and the separate '
+         '`adult.test` for final evaluation. Exact feature duplicates are removed before splitting. '
+         'Test duplicates and feature overlap with training are excluded. Labels are normalized, including '
+         'the trailing period in the official test file; missing values are imputed from training.', '',
+         f"Training: {report['split']['train_rows']:,}; validation: {report['split']['validation_rows']:,}; "
+         f"final test: {report['split']['test_rows']:,}. See the split manifest for counts, raw hashes and split hash.", '',
+         'Nine configurations were evaluated on validation only: six classical pipelines and three PyTorch MLPs. '
+         'Validation AP chooses one classical model and one MLP; validation positive-class F1 chooses their '
+         'classification thresholds. The selection lock is written before parsing test labels. '
+         'Only these selected models and the two predeclared legacy-recipe controls are evaluated on test.', '',
+         'The controls use StandardScaler without PCA. LightGBM retains SMOTE and class balancing; '
+         'the MLP retains SMOTE, weighted cross entropy, BatchNorm, dropout 0.3 and 12 epochs. '
+         'They reproduce representative recipes, not every original preprocessing search or the unseeded historical DL run.', '',
+         '## Measured results', '']
+for name, result in report['test'].items():
+    lines += [f"- **{name}**: accuracy {result['accuracy']:.4f}, AP {result['average_precision']:.4f}, "
+              f"ROC-AUC {result['roc_auc']:.4f}, positive F1 {result['f1_positive']:.4f}, "
+              f"macro-F1 {result['f1_macro']:.4f}, log loss {result['log_loss']:.4f}."]
+lines += ['', f"Against the matched-protocol controls, classical accuracy improved by "
+          f"{100*(best_c['accuracy']-base_c['accuracy']):.2f} percentage points; "
+          f"MLP accuracy improved by {100*(best_d['accuracy']-base_d['accuracy']):.2f} percentage points. "
+          'These changes combine model/training changes and validation-selected thresholds. '
+          'AP measures ranking independently of those thresholds.', '',
+          '![Measured test comparison](improved/comparison.png)', '', '## What changed', '',
+          '- Classical ML: no synthetic one-hot interpolations or automatic double balancing in the new candidates; '
+          'bounded LightGBM search with smaller leaves and regularization.',
+          '- DL: train-only preprocessing, unweighted binary cross entropy on natural class proportions, '
+          'AdamW, reduced dropout, deterministic seeds, validation-AP early stopping and checkpoint restoration.',
+          '- Thresholds are selected on validation, with no test tuning. All preprocessing fits on training only.', '',
+          '## Stability and limits', '']
+repeats = report['selected_mlp_seed_repeats']
+lines += [f"The selected MLP was repeated with seeds 42, 43 and 44 without searching on test: "
+          f"accuracy {min(r['accuracy'] for r in repeats):.4f}–{max(r['accuracy'] for r in repeats):.4f}; "
+          f"AP {min(r['average_precision'] for r in repeats):.4f}–{max(r['average_precision'] for r in repeats):.4f}.", '']
+for name, interval in intervals.items():
+    lo, hi = interval['paired_ap_delta_95_percentile']
+    lines += [f"- {name}: paired row-bootstrap 95% AP-difference interval [{lo:.5f}, {hi:.5f}] (500 draws)."]
+lines += ['', 'The MLP remains behind LightGBM. Small AP gains should be interpreted with their intervals. '
+          'Row bootstrap assumes independent records; this dataset has no person identifiers to verify that assumption. '
+          'The historical public dataset and one fixed validation split do not establish generalization to current populations. '
+          'No new training configuration was chosen after viewing final test scores.', '',
+          '## Reproduce and inspect', '',
+          'Run `python src/adult_benchmark.py`, then `python tools/build_delivery.py`. '
+          'Use `notebooks/adult_income_improved.ipynb` for the readable walkthrough. '
+          'The notebook explicitly states when it reuses a recorded run; set `REUSE_RECORDED_RUN = False` to retrain.', '',
+          'Evidence: `improved/metrics.json`, `split_manifest.json`, `selection_lock.json`, '
+          '`training_curves.json`, `paired_bootstrap.json`, and the executed notebook.', '',
+          'Dataset: Becker, B. & Kohavi, R. (1996). [Adult, UCI Machine Learning Repository]'
+          '(https://archive.ics.uci.edu/dataset/2/adult). DOI: 10.24432/C5XW20; CC BY 4.0. '
+          'Raw data and local prediction files are excluded from the repository.']
+(ROOT / 'reports/IMPROVEMENT_REPORT.md').write_text('\n'.join(lines)+'\n', encoding='utf-8')
+
+nb = nbf.v4.new_notebook()
+md, code = nbf.v4.new_markdown_cell, nbf.v4.new_code_cell
+nb.cells = [md('# Adult Income: Classical ML and PyTorch\n\nA post-coursework extension with validation-only selection, a separate official UCI test, and three DL seeds. '
+               'Original coursework is preserved. This notebook uses the modular source in `src/adult_benchmark.py`.\n\n'
+               'Install dependencies with `%pip install -r requirements-improved.txt` if needed. CPU is sufficient.'),
+    code("from pathlib import Path\nimport sys\nimport json\nimport subprocess\nimport pandas as pd\nfrom IPython.display import display, Image\n\n"
+         "ROOT = next((p for p in [Path.cwd(), *Path.cwd().parents] if (p / 'src/adult_benchmark.py').exists()), None)\n"
+         "if ROOT is None:\n    ROOT = Path('/content/adult-income-improvement')\n    subprocess.run(['git', 'clone', 'https://github.com/VietAnh1803/HCMUT_ML_AdultCensusIncome_Pipeline.git', str(ROOT)], check=True)\n"
+         "sys.path.insert(0, str(ROOT / 'src'))\nOUT = ROOT / 'reports/improved'\nprint('Source:', ROOT)"),
+    md('## Run or inspect a recorded experiment\nThe shipped results are from the actual CPU experiment. Reuse is explicit; turn it off to download the official data and train again. '
+       'Training and threshold selection finish before final test labels are parsed.'),
+    code("REUSE_RECORDED_RUN = True\nif not REUSE_RECORDED_RUN or not (OUT / 'metrics.json').exists():\n"
+         "    from adult_benchmark import main\n    main(OUT, ROOT / '.cache/adult')\n"
+         "else:\n    print('Reusing the recorded, verified CPU run; this cell does not retrain.')\n"
+         "report = json.loads((OUT / 'metrics.json').read_text())\ndisplay(pd.Series(report['split']).to_frame('Split evidence'))"),
+    md('## Validation comparison\nSelect on AP. The two legacy recipes are predefined controls. No test score is used here.'),
+    code("validation = pd.json_normalize(report['validation_experiments'])\ndisplay(validation[['name', 'family', 'validation.average_precision', 'validation.roc_auc', 'fit_seconds']].sort_values('validation.average_precision', ascending=False))\ndisplay(pd.Series(report['selection']).to_frame('Frozen choices'))"),
+    md('## Final test and DL stability\nOnly selected models and controls are graded. These are distinct from historical coursework scores.'),
+    code("display(pd.DataFrame(report['test']).T[['accuracy', 'average_precision', 'roc_auc', 'f1_positive', 'f1_macro', 'log_loss']])\ndisplay(pd.DataFrame(report['selected_mlp_seed_repeats'])[['seed', 'accuracy', 'average_precision', 'roc_auc']])\nassert all(report['checks'].values())\nprint('ADULT_REPORT_VERIFIED: all recorded protocol checks passed')"),
+    md('## Measured comparison\nAccuracy gains include validation threshold changes. AP gains are modest, and the MLP does not outperform LightGBM. '
+       'See the improvement report and paired bootstrap for uncertainty. This 1994 census dataset is a historical learning benchmark.'),
+    code("display(Image(filename=str(OUT / 'comparison.png')))\ndisplay(pd.Series(report['environment']).to_frame('Recorded environment'))"),
+]
+nb.metadata.kernelspec = {'display_name': 'Python 3', 'language': 'python', 'name': 'python3'}
+nb.metadata.language_info = {'name': 'python'}
+nbf.validate(nb)
+nbf.write(nb, ROOT / 'notebooks/adult_income_improved.ipynb')
+executed = NotebookClient(nb, timeout=900, kernel_name='python3', resources={'metadata': {'path': str(ROOT)}}).execute()
+assert all(c.execution_count is not None for c in executed.cells if c.cell_type == 'code')
+assert not any(o.output_type == 'error' for c in executed.cells if c.cell_type == 'code' for o in c.outputs)
+nbf.write(executed, OUT / 'executed_adult_income_improved.ipynb')
+print('Built report, paired bootstrap and notebook; five code cells executed successfully.')

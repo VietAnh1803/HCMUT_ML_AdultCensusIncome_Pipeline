@@ -1,0 +1,24 @@
+{
+  "lightgbm_small_leaves": {
+    "paired_accuracy_delta_95_percentile": [
+      0.019570435103698654,
+      0.02859099021478242
+    ],
+    "paired_ap_delta_95_percentile": [
+      0.0023626958449228103,
+      0.007636796728845186
+    ],
+    "bootstrap_samples": 500
+  },
+  "mlp_128_64": {
+    "paired_accuracy_delta_95_percentile": [
+      0.023816850267708797,
+      0.031788110037540805
+    ],
+    "paired_ap_delta_95_percentile": [
+      0.001278856585346902,
+      0.007317813380856316
+    ],
+    "bootstrap_samples": 500
+  }
+}

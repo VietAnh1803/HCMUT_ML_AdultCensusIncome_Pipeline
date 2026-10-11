@@ -1,0 +1,27 @@
+{
+  "criterion": "validation average precision",
+  "best_classic": "lightgbm_small_leaves",
+  "best_mlp": "mlp_128_64",
+  "test_models": [
+    "legacy_lightgbm",
+    "legacy_mlp",
+    "lightgbm_small_leaves",
+    "mlp_128_64"
+  ],
+  "thresholds": {
+    "logistic": 0.3022786633024744,
+    "linear_svm": 0.286672064393253,
+    "random_forest": 0.3779459758734919,
+    "legacy_lightgbm": 0.5,
+    "lightgbm_regularized": 0.3455716659292112,
+    "lightgbm_small_leaves": 0.411621832952712,
+    "legacy_mlp": 0.5,
+    "mlp_64_32": 0.3031807243824005,
+    "mlp_128_64": 0.31209298968315125
+  },
+  "extra_mlp_seeds": [
+    43,
+    44
+  ],
+  "split_ids_sha256": "8b65a245597770268e00fc818f7705fd6b958b02679fd5cfe630bef94fb425e5"
+}

@@ -1,66 +1,74 @@
-# Bài Tập Lớn Môn Học Máy — Adult Census Income Prediction Pipeline
+# Adult Income — Classical ML and PyTorch
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/VietAnh1803/HCMUT_ML_AdultCensusIncome_Pipeline/blob/main/notebooks/tabular_data_pipeline.ipynb)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/VietAnh1803/HCMUT_ML_AdultCensusIncome_Pipeline/blob/main/notebooks/adult_income_improved.ipynb)
 
-## Thông tin chung
+HCMUT Machine Learning coursework, followed by a measured evaluation and training
+improvement in October 2026. The extension adds a separate validation partition,
+official UCI test data, deterministic PyTorch training, and an explicit selection lock.
+AI assisted implementation and documentation; all scores come from executed code.
 
-| Mục | Chi tiết |
-| --- | --- |
-| **Môn học** | Học Máy |
-| **Mã môn học** | CO3117 |
-| **Trường** | Trường đại học Bách Khoa - ĐHQG Thành phố Hồ Chí Minh |
-| **Học kỳ** | HK2 - Năm học 2025-2026 |
-| **GVHD** | TS. Trương Vĩnh Lân |
-| **Nhóm** | 9 |
-| **Lớp** | L01 |
+[Improved notebook](notebooks/adult_income_improved.ipynb) ·
+[Executed notebook](reports/improved/executed_adult_income_improved.ipynb) ·
+[Experiment report](reports/IMPROVEMENT_REPORT.md) ·
+[Measured results](reports/improved/metrics.json)
 
-## Mục tiêu Báo cáo
+## What was improved
 
-Xây dựng hệ thống học máy (Machine Learning Pipeline) toàn diện và mạnh mẽ để giải quyết bài toán **Dự đoán thu nhập cá nhân >50K$** (Adult Census Income). Dự án đáp ứng các tiêu chí sau:
+The original notebook chose configurations using test scores. The extension selects
+models and thresholds using validation only, then grades selected models and two
+predeclared controls on a separate official test. Exact feature duplicates and
+train/test overlaps are removed. Preprocessing is fitted on training only.
 
-- **Khám phá dữ liệu (EDA):** Tự động truy xuất Boxplot, Heatmap Tương quan, CountPlot.
-- **Tiền xử lý siêu linh hoạt (Dynamic Pipeline):** Tùy chỉnh tự động giữa `StandardScaler` và `MinMaxScaler`, tích hợp Giảm chiều dữ liệu `PCA (Principal Component Analysis)`. Xử lý giá trị khuyết mã `?` bằng `SimpleImputer` và `OneHotEncoder`.
-- **Xử lý Dữ liệu Mất cân bằng (Imbalanced):** Can thiệp tỷ lệ với **SMOTE** (Synthetic Minority Over-sampling Technique).
-- **So sánh Đấu trường Mô hình (Model Comparison):** Đánh giá song song đa bộ tiền xử lý trên `Logistic Regression`, `Linear SVM`, `Random Forest`, và `LightGBM`.
-- **Nghiên cứu Nâng cao (Deep Learning):** Áp dụng Mạng Nơ-ron `MLP PyTorch` kết hợp `Class Weights`.
-- **Trực quan hóa Hoàn hảo:** Tự động xuất biểu đồ Bar Chart so sánh F1/AUC/Accuracy và Heatmap ma trận nhầm lẫn (Confusion Matrix).
-- **Xuất đặc trưng (Features Exporting):** Rút trích Vector dữ liệu đã xử lý ra định dạng `.npy` (Numpy Array).
+On the same **16,249-row test**, the new LightGBM pipeline reached **86.73% accuracy**
+and **0.9276 ROC-AUC**, compared with **84.29% accuracy** for the matched-protocol
+legacy recipe. The selected PyTorch MLP reached **84.09% accuracy** and **0.9103
+ROC-AUC**, compared with **81.30%** for its legacy recipe.
 
-## Dataset
+The MLP removes SMOTE plus weighted-loss double balancing, uses AdamW and
+validation-AP early stopping, and restores its best checkpoint. Three fixed seeds
+produced **84.09–84.50% accuracy**. LightGBM remains the stronger model here.
+Accuracy improvements include validation-selected thresholds; AP gains are modest.
+The report includes paired bootstrap intervals and the original protocol's limits.
 
-- **Tên dataset**: Adult Census Income
-- **Nguồn Kaggle**: [uciml/adult-census-income](https://www.kaggle.com/datasets/uciml/adult-census-income)
-- **Kích thước**: 32.561 mẫu với 15 thuộc tính (14 features + 1 target).
-- **Phương thức tải**: Tự động thông qua thư viện `kagglehub` (Không cần Mount Drive thủ công).
+![Measured comparison on the official test](reports/improved/comparison.png)
 
-## Hướng dẫn chạy Notebook
+## Reproduce
 
-### Trên Google Colab (Khuyến nghị để tận dụng GPU/Tốc độ)
+Python 3.12 and CPU were used for the recorded run. No GPU or account token is needed.
 
-1. Mở [Google Colab](https://colab.research.google.com/)
-2. Chọn hộp thoại **File → Open notebook → GitHub**
-3. Nhập đường dẫn Repository: `https://github.com/VietAnh1803/HCMUT_ML_AdultCensusIncome_Pipeline`
-4. Mở trực tiếp file `notebooks/tabular_data_pipeline.ipynb`
-5. Bấm chọn **Runtime → Run all (Chạy tất cả)** để mô hình tự động kết xuất báo cáo cuối cùng.
-
-### Yêu cầu thư viện (Requirements)
-
-- `kagglehub`, `imbalanced-learn`, `lightgbm`, `torch`
-- `pandas`, `numpy`, `matplotlib`, `seaborn`, `scikit-learn`
-
-## Cấu trúc thư mục Nộp Bài
-
-```text
-HCMUT_ML_AdultCensusIncome_Pipeline/
-├── notebooks/
-│   └── tabular_data_pipeline.ipynb    # Code chạy chính toàn bộ quy trình
-├── features/                          # Thư mục lưu Model & Vector Đặc trưng
-│   ├── X_train_processed.npy
-│   ├── y_train_resampled.npy
-│   ├── X_test_processed.npy
-│   ├── y_test.npy
-│   ├── best_classic_pipeline.pkl
-│   └── mlp_weights.pth
-├── mlAssignments_v1.1.pdf             # Yêu cầu đề bài
-└── README.md                          # Hướng dẫn chi tiết
+```bash
+git clone https://github.com/VietAnh1803/HCMUT_ML_AdultCensusIncome_Pipeline.git
+cd HCMUT_ML_AdultCensusIncome_Pipeline
+python -m pip install -r requirements-improved.txt
+python -m unittest discover -s tests -v
+python src/adult_benchmark.py
+python tools/build_delivery.py
 ```
+
+The benchmark downloads the public UCI archive into an ignored local cache.
+The walkthrough notebook explicitly reuses the recorded run by default. Set
+`REUSE_RECORDED_RUN = False` to train again; install dependencies first. All five
+walkthrough code cells were executed successfully, and all five protocol tests passed.
+
+## Source and evidence
+
+- `src/adult_benchmark.py`: six classical candidates, three MLP configurations,
+  validation selection, checkpoint restoration and separate final evaluation.
+- `tests/test_protocol.py`: label normalization, invalid labels, duplicate detection,
+  threshold selection, and preprocessing isolation.
+- `reports/improved/`: metrics, data and split hashes, frozen choices, training curves,
+  three-seed DL results, paired uncertainty estimates and the executed notebook.
+- `notebooks/tabular_data_pipeline.ipynb` and `README-coursework.md`: original
+  coursework, retained for context. Historical scores use a different protocol.
+
+## Dataset and limits
+
+Becker, B. & Kohavi, R. (1996). [Adult, UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/2/adult).
+DOI: 10.24432/C5XW20. License: CC BY 4.0. The extension uses the official training
+and test files, with **26,028 training**, **6,508 validation**, and **16,249 test** rows
+after removing duplicate features and overlap.
+
+This is a historical census benchmark. One validation split and three neural-network
+seeds do not establish performance on current populations. Row bootstrap assumes
+independent records; the data provides no person IDs to verify that assumption.
+Raw data, prediction rows and local model binaries are excluded from this release.

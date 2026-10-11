@@ -1,0 +1,17 @@
+{
+  "seed": 42,
+  "train_rows": 26028,
+  "validation_rows": 6508,
+  "original_train_rows": 32561,
+  "train_feature_duplicates_removed": 25,
+  "split_ids_sha256": "8b65a245597770268e00fc818f7705fd6b958b02679fd5cfe630bef94fb425e5",
+  "source": "https://archive.ics.uci.edu/static/public/2/adult.zip",
+  "source_sha256": {
+    "adult.data": "5b00264637dbfec36bdeaab5676b0b309ff9eb788d63554ca0a249491c86603d",
+    "adult.test": "a2a9044bc167a35b2361efbabec64e89d69ce82d9790d2980119aac5fd7e9c05"
+  },
+  "test_rows": 16249,
+  "original_test_rows": 16281,
+  "test_duplicates_removed": 6,
+  "test_feature_overlap_with_train_removed": 26
+}
