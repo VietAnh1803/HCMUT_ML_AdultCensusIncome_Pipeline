@@ -81,7 +81,7 @@ python src/local_evaluation.py score --labels .cache/local-evaluation/evaluation
 python tools/build_delivery.py --input .cache/fitting-verified-run --baseline .cache/audit-baseline/metrics.json
 ```
 
-The delivery tool copies completed outputs to reports/improved, produces actual plots and executes a five-cell recorded-results walkthrough. That execution is not a retraining run. Test, experiment and CLI execution results are recorded in reports/verification/verification.json.
+The delivery tool copies completed outputs to reports/improved, produces actual plots and executes a seven-code-cell walkthrough with tests and public-validation scoring. Default execution is not a retraining run. Historical test, experiment and CLI execution results are recorded in reports/verification/verification.json; the new notebook cold-start and Colab checks are distinguished in reports/verification/colab_verification.json.
 
 ## Automated tests and fitting diagnostics
 

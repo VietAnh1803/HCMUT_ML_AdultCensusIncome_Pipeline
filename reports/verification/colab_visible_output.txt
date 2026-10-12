@@ -1,0 +1,477 @@
+- main "Sổ tay":
+  - 'region "Ô 0: Ô chứa văn bản: Adult Income: Classical ML, PyTorch and scoring"':
+    - 'generic "Thu gọn 13 ô con trong Adult Income: Classical ML, PyTorch and scoring (Nhấn phím <Shift> để thu gọn cả các mục đồng cấp)"':
+      - 'button "Thu gọn 13 ô con trong Adult Income: Classical ML, PyTorch and scoring (Nhấn phím <Shift> để thu gọn cả các mục đồng cấp)"'
+    - 'heading "Adult Income: Classical ML, PyTorch and scoring" [level=1]'
+    - paragraph:
+      - text: Use
+      - strong: Runtime → Run all
+      - text: on Google Colab with CPU. Setup runs before data-library imports. No Drive mount, Kaggle token or GPU is required. Internet is needed for public source, dependencies and UCI data.
+    - paragraph:
+      - text: The default walkthrough reads the recorded experiment and runs tests plus the public-validation scorer. Set
+      - code: REUSE_RECORDED_RUN = False
+      - text: to train again. Previously observed test results are not an untouched holdout.
+  - 'region "Ô 1: Ô chứa mã:"':
+    - generic "Di chuyển ô lên trên Ctrl+M K":
+      - button "Di chuyển ô lên trên Ctrl+M K"
+    - generic "Di chuyển ô xuống Ctrl+M J":
+      - button "Di chuyển ô xuống Ctrl+M J"
+    - generic "Các tính năng AI hiện có":
+      - button "Các tính năng AI hiện có"
+    - generic "Xóa ô Ctrl+M D":
+      - button "Xóa ô Ctrl+M D"
+    - generic "Thao tác khác đối với ô":
+      - button "Thao tác khác đối với ô"
+    - button "Chạy ô":
+    - generic: "[1]"
+    - generic: 1 phút
+    - code:
+      - generic: from pathlib import Path
+      - generic: import importlib.util
+      - generic: import json
+      - generic: import subprocess
+      - generic: import sys
+      - generic: print('Notebook Python:', sys.version, flush=True)
+      - generic: ROOT = next((p for p in [Path.cwd(), *Path.cwd().parents] if (p / 'src/adult_benchmark.py').is_file()), None)
+      - generic: "if ROOT is None:"
+      - generic: ROOT = Path.cwd() / 'adult-income-project'
+      - generic: "if not (ROOT / 'src/adult_benchmark.py').is_file():"
+      - generic: "if ROOT.exists():"
+      - generic: raise RuntimeError('adult-income-project exists without the source; choose an empty working directory.')
+      - generic: subprocess.run(['git', 'clone', '--depth', '1', 'https://github.com/VietAnh1803/HCMUT_ML_AdultCensusIncome_Pipeline.git', str(ROOT)], check=True)
+      - generic: IN_COLAB = importlib.util.find_spec('google.colab') is not None if importlib.util.find_spec('google') is not None else False
+      - generic: "INSTALL_DEPENDENCIES = IN_COLAB # Set True locally only if dependencies are missing."
+      - generic: NOTEBOOK_REQUIREMENTS = "numpy==1.26.4; python_version < '3.13'\nnumpy==2.2.6; python_version >= '3.13'\npandas==2.3.2\nscikit-learn==1.7.2\nimbalanced-learn==0.14.1\nlightgbm==4.6.0\ntorch==2.9.1\nmatplotlib==3.10.6\nnbformat==5.10.4\nnbclient==0.10.2\nipykernel==6.30.1\n"
+      - generic: "if INSTALL_DEPENDENCIES:"
+      - generic: "if sys.version_info[:2] not in [(3, 12), (3, 13)]:"
+      - generic: raise RuntimeError('Use a Python 3.12 or 3.13 runtime; other versions have not been validated.')
+      - generic: requirements_path = ROOT / '.cache/notebook-requirements.txt'
+      - generic: requirements_path.parent.mkdir(parents=True, exist_ok=True)
+      - generic: requirements_path.write_text(NOTEBOOK_REQUIREMENTS, encoding='utf-8')
+      - generic: print('Installing CPU PyTorch...', flush=True)
+      - generic: subprocess.run([sys.executable, '-m', 'pip', 'install', '--quiet', '--only-binary=:all:', 'torch==2.9.1', '--index-url', 'https://download.pytorch.org/whl/cpu'], check=True, timeout=600)
+      - generic: print('Installing pinned notebook dependencies...', flush=True)
+      - generic: subprocess.run([sys.executable, '-m', 'pip', 'install', '--quiet', '--only-binary=:all:', '-r', str(requirements_path)], check=True, timeout=600)
+      - generic: from IPython.display import display, Image
+      - generic: import pandas as pd
+      - generic: "def run_script(relative, *arguments):"
+      - generic: subprocess.run([sys.executable, str(ROOT / relative), *map(str, arguments)], cwd=ROOT, check=True)
+      - generic: print('Source:', ROOT)
+      - generic: print('Colab:', IN_COLAB)
+      - generic: import importlib.metadata
+      - generic: "print('Installed packages:', {name: importlib.metadata.version(name) for name in ['numpy', 'pandas', 'scikit-learn', 'torch', 'lightgbm']})"
+      - textbox "Editor content": "subprocess.run([sys.executable, str(ROOT / relative), *map(str, arguments)], cwd=ROOT, check=True) print('Source:', ROOT) print('Colab:', IN_COLAB) import importlib.metadata print('Installed packages:', {name: importlib.metadata.version(name) for name in ['numpy', 'pandas', 'scikit-learn', 'torch', 'lightgbm']})"
+    - region "Đầu ra của ô 1":
+      - generic "Ẩn/hiện kết quả":
+        - button "Ẩn/hiện kết quả"
+      - generic "Thao tác đối với kết quả của ô mã":
+        - button "Thao tác đối với kết quả của ô mã"
+      - generic: "Notebook Python: 3.13.16 (main, Oct 1 2026, 15:40:24) [GCC 13.3.0] Installing CPU PyTorch... Installing pinned notebook dependencies... Source: /content/adult-income-project Colab: True Installed packages: {'numpy': '2.2.6', 'pandas': '2.3.2', 'scikit-learn': '1.7.2', 'torch': '2.9.1+cpu', 'lightgbm': '4.6.0'}"
+  - 'region "Ô 2: Ô chứa văn bản: Recorded results or fresh training"':
+    - generic "Thu gọn 1 ô con trong Recorded results or fresh training (Nhấn phím <Shift> để thu gọn cả các mục đồng cấp)":
+      - button "Thu gọn 1 ô con trong Recorded results or fresh training (Nhấn phím <Shift> để thu gọn cả các mục đồng cấp)"
+    - heading "Recorded results or fresh training" [level=2]
+    - paragraph: The default displays measured, shipped scores without retraining. Fresh training uses the same configurations in a new Python process, so package versions do not depend on already-imported kernel modules.
+  - 'region "Ô 3: Ô chứa mã:"':
+    - button "Chạy ô":
+    - generic: "[2]"
+    - generic: 0 giây
+    - generic: REUSE_RECORDED_RUN = True
+    - generic: OUT = ROOT / 'reports/improved'
+    - generic: "if not REUSE_RECORDED_RUN or not (OUT / 'metrics.json').is_file():"
+    - generic: OUT = ROOT / '.cache/notebook-retrain'
+    - generic: run_script('src/adult_benchmark.py', '--output', OUT, '--cache', ROOT / '.cache/adult')
+    - generic: "else:"
+    - generic: "print('Recorded CPU experiment: this cell does not retrain.')"
+    - generic: report = json.loads((OUT / 'metrics.json').read_text())
+    - generic: display(pd.Series(report['split']).to_frame('Split evidence'))
+    - region "Đầu ra của ô 3":
+      - generic "Ẩn/hiện kết quả":
+        - button "Ẩn/hiện kết quả"
+      - generic "Thao tác đối với kết quả của ô mã":
+        - button "Thao tác đối với kết quả của ô mã"
+      - iframe:
+        - generic: "Recorded CPU experiment: this cell does not retrain."
+        - table:
+          - rowgroup:
+            - row "Split evidence":
+              - columnheader
+              - columnheader "Split evidence"
+          - rowgroup:
+            - row "seed 42":
+              - rowheader "seed"
+              - cell "42"
+            - row "train_rows 26028":
+              - rowheader "train_rows"
+              - cell "26028"
+            - row "validation_rows 6508":
+              - rowheader "validation_rows"
+              - cell "6508"
+            - row "original_train_rows 32561":
+              - rowheader "original_train_rows"
+              - cell "32561"
+            - row "train_feature_duplicates_removed 25":
+              - rowheader "train_feature_duplicates_removed"
+              - cell "25"
+            - row "split_ids_sha256 8b65a245597770268e00fc818f7705fd6b958b02679fd5...":
+              - rowheader "split_ids_sha256"
+              - cell "8b65a245597770268e00fc818f7705fd6b958b02679fd5..."
+            - row "source https://archive.ics.uci.edu/static/public/2/ad...":
+              - rowheader "source"
+              - cell "https://archive.ics.uci.edu/static/public/2/ad..."
+            - 'row "source_sha256 {''adult.data'': ''5b00264637dbfec36bdeaab5676b0b..."':
+              - rowheader "source_sha256"
+              - 'cell "{''adult.data'': ''5b00264637dbfec36bdeaab5676b0b..."'
+            - row "test_rows 16249":
+              - rowheader "test_rows"
+              - cell "16249"
+            - row "original_test_rows 16281":
+              - rowheader "original_test_rows"
+              - cell "16281"
+            - row "test_duplicates_removed 6":
+              - rowheader "test_duplicates_removed"
+              - cell "6"
+            - row "test_feature_overlap_with_train_removed 26":
+              - rowheader "test_feature_overlap_with_train_removed"
+              - cell "26"
+        - button "Convert this dataframe to an interactive table.":
+  - 'region "Ô 4: Ô chứa văn bản: Run all 50 automated cases"':
+    - generic "Thu gọn 1 ô con trong Run all 50 automated cases (Nhấn phím <Shift> để thu gọn cả các mục đồng cấp)":
+      - button "Thu gọn 1 ô con trong Run all 50 automated cases (Nhấn phím <Shift> để thu gọn cả các mục đồng cấp)"
+    - heading "Run all 50 automated cases" [level=2]
+    - paragraph: These verify implementation behavior, including scoring, leakage checks, early stopping and actual checkpoint weights.
+  - 'region "Ô 5: Ô chứa mã:"':
+    - button "Chạy ô":
+    - generic: "[3]"
+    - generic: 32 giây
+    - generic: TEST_RECORD = ROOT / '.cache/notebook-test-results.json'
+    - generic: run_script('tools/run_tests.py', '--output', TEST_RECORD)
+    - generic: tests = json.loads(TEST_RECORD.read_text())
+    - generic: assert tests['successful'] and tests['tests_run'] == tests['passed'] == 50
+    - generic: "print(f\"AUTOMATED_TESTS_COMPLETE: {tests['passed']}/{tests['tests_run']} passed\")"
+    - region "Đầu ra của ô 5":
+      - generic "Ẩn/hiện kết quả":
+        - button "Ẩn/hiện kết quả"
+      - generic "Thao tác đối với kết quả của ô mã":
+        - button "Thao tác đối với kết quả của ô mã"
+      - generic: "AUTOMATED_TESTS_COMPLETE: 50/50 passed"
+  - 'region "Ô 6: Ô chứa văn bản: Public-validation scoring demo"':
+    - generic "Thu gọn 1 ô con trong Public-validation scoring demo (Nhấn phím <Shift> để thu gọn cả các mục đồng cấp)":
+      - button "Thu gọn 1 ô con trong Public-validation scoring demo (Nhấn phím <Shift> để thu gọn cả các mục đồng cấp)"
+    - heading "Public-validation scoring demo" [level=2]
+    - paragraph: The logistic reference fits on training only and reads no evaluation labels. The scorer joins by ID. The 6,508-row validation labels are public and already used for selection; this is not a hidden challenge or a new holdout.
+  - 'region "Ô 7: Ô chứa mã:"':
+    - button "Chạy ô":
+    - generic: "[4]"
+    - generic: 24 giây
+    - generic: DEMO = ROOT / '.cache/notebook-scoring'
+    - generic: run_script('src/local_evaluation.py', 'prepare', '--output', DEMO)
+    - generic: run_script('src/local_evaluation.py', 'reference', '--train', DEMO / 'train.csv', '--features', DEMO / 'evaluation_features.csv', '--output', DEMO / 'predictions.csv')
+    - generic: run_script('src/local_evaluation.py', 'score', '--labels', DEMO / 'evaluation_labels.csv', '--predictions', DEMO / 'predictions.csv', '--output', DEMO / 'score.json')
+    - generic: score = json.loads((DEMO / 'score.json').read_text())
+    - generic: assert score['n'] == 6508
+    - generic: display(pd.Series(score).to_frame('Fresh public-validation score'))
+    - generic: print('PUBLIC_SCORING_COMPLETE')
+    - region "Đầu ra của ô 7":
+      - generic "Ẩn/hiện kết quả":
+        - button "Ẩn/hiện kết quả"
+      - generic "Thao tác đối với kết quả của ô mã":
+        - button "Thao tác đối với kết quả của ô mã"
+      - iframe:
+        - table:
+          - rowgroup:
+            - row "Fresh public-validation score":
+              - columnheader
+              - columnheader "Fresh public-validation score"
+          - rowgroup:
+            - row "primary_metric average_precision":
+              - rowheader "primary_metric"
+              - cell "average_precision"
+            - row "higher_is_better True":
+              - rowheader "higher_is_better"
+              - cell "True"
+            - row "evaluation_scope local public validation demonstration":
+              - rowheader "evaluation_scope"
+              - cell "local public validation demonstration"
+            - row "accuracy 0.857406":
+              - rowheader "accuracy"
+              - cell "0.857406"
+            - row "average_precision 0.782419":
+              - rowheader "average_precision"
+              - cell "0.782419"
+            - row "roc_auc 0.910775":
+              - rowheader "roc_auc"
+              - cell "0.910775"
+            - row "precision_positive 0.743161":
+              - rowheader "precision_positive"
+              - cell "0.743161"
+            - row "recall_positive 0.623724":
+              - rowheader "recall_positive"
+              - cell "0.623724"
+            - row "f1_positive 0.678225":
+              - rowheader "f1_positive"
+              - cell "0.678225"
+            - row "f1_macro 0.793317":
+              - rowheader "f1_macro"
+              - cell "0.793317"
+            - row "log_loss 0.311445":
+              - rowheader "log_loss"
+              - cell "0.311445"
+            - row "threshold 0.5":
+              - rowheader "threshold"
+              - cell "0.5"
+            - row "confusion_matrix [[4602, 338], [590, 978]]":
+              - rowheader "confusion_matrix"
+              - cell "[[4602, 338], [590, 978]]"
+            - 'row "class_counts {''0'': 4940, ''1'': 1568}"':
+              - rowheader "class_counts"
+              - 'cell "{''0'': 4940, ''1'': 1568}"'
+            - row "n 6508":
+              - rowheader "n"
+              - cell "6508"
+        - button "Convert this dataframe to an interactive table.":
+        - generic: PUBLIC_SCORING_COMPLETE
+  - 'region "Ô 8: Ô chứa văn bản: Validation comparison"':
+    - generic "Thu gọn 1 ô con trong Validation comparison (Nhấn phím <Shift> để thu gọn cả các mục đồng cấp)":
+      - button "Thu gọn 1 ô con trong Validation comparison (Nhấn phím <Shift> để thu gọn cả các mục đồng cấp)"
+    - heading "Validation comparison" [level=2]
+    - paragraph: Model and threshold selection use validation, excluding the predefined controls.
+  - 'region "Ô 9: Ô chứa mã:"':
+    - button "Chạy ô":
+    - generic: "[5]"
+    - generic: 0 giây
+    - generic: validation = pd.json_normalize(report['validation_experiments'])
+    - generic: display(validation[['name', 'family', 'validation.average_precision', 'validation.roc_auc']].sort_values('validation.average_precision', ascending=False))
+    - generic: display(pd.Series(report['selection']).to_frame('Frozen choices'))
+    - region "Đầu ra của ô 9":
+      - generic "Ẩn/hiện kết quả":
+        - button "Ẩn/hiện kết quả"
+      - generic "Thao tác đối với kết quả của ô mã":
+        - button "Thao tác đối với kết quả của ô mã"
+      - iframe:
+        - table:
+          - rowgroup:
+            - row "name family validation.average_precision validation.roc_auc":
+              - columnheader
+              - columnheader "name"
+              - columnheader "family"
+              - columnheader "validation.average_precision"
+              - columnheader "validation.roc_auc"
+          - rowgroup:
+            - row "6 lightgbm_small_leaves classic 0.843210 0.932306":
+              - rowheader "6"
+              - cell "lightgbm_small_leaves"
+              - cell "classic"
+              - cell "0.843210"
+              - cell "0.932306"
+            - row "5 lightgbm_regularized classic 0.843191 0.932739":
+              - rowheader "5"
+              - cell "lightgbm_regularized"
+              - cell "classic"
+              - cell "0.843191"
+              - cell "0.932739"
+            - row "4 legacy_lightgbm classic 0.841132 0.931935":
+              - rowheader "4"
+              - cell "legacy_lightgbm"
+              - cell "classic"
+              - cell "0.841132"
+              - cell "0.931935"
+            - row "3 random_forest classic 0.808458 0.918587":
+              - rowheader "3"
+              - cell "random_forest"
+              - cell "classic"
+              - cell "0.808458"
+              - cell "0.918587"
+            - row "9 mlp_128_64 deep_learning 0.800632 0.918765":
+              - rowheader "9"
+              - cell "mlp_128_64"
+              - cell "deep_learning"
+              - cell "0.800632"
+              - cell "0.918765"
+            - row "8 mlp_64_32 deep_learning 0.799756 0.918827":
+              - rowheader "8"
+              - cell "mlp_64_32"
+              - cell "deep_learning"
+              - cell "0.799756"
+              - cell "0.918827"
+            - row "7 legacy_mlp deep_learning 0.795787 0.916605":
+              - rowheader "7"
+              - cell "legacy_mlp"
+              - cell "deep_learning"
+              - cell "0.795787"
+              - cell "0.916605"
+            - row "2 linear_svm classic 0.782718 0.910748":
+              - rowheader "2"
+              - cell "linear_svm"
+              - cell "classic"
+              - cell "0.782718"
+              - cell "0.910748"
+            - row "1 logistic classic 0.782419 0.910775":
+              - rowheader "1"
+              - cell "logistic"
+              - cell "classic"
+              - cell "0.782419"
+              - cell "0.910775"
+            - row "0 dummy_prior classic 0.240934 0.500000":
+              - rowheader "0"
+              - cell "dummy_prior"
+              - cell "classic"
+              - cell "0.240934"
+              - cell "0.500000"
+        - button "Convert this dataframe to an interactive table.":
+        - table:
+          - rowgroup:
+            - row "Frozen choices":
+              - columnheader
+              - columnheader "Frozen choices"
+          - rowgroup:
+            - row "criterion validation average precision":
+              - rowheader "criterion"
+              - cell "validation average precision"
+            - row "best_classic lightgbm_small_leaves":
+              - rowheader "best_classic"
+              - cell "lightgbm_small_leaves"
+            - row "best_mlp mlp_128_64":
+              - rowheader "best_mlp"
+              - cell "mlp_128_64"
+            - row "test_models [dummy_prior, logistic, legacy_lightgbm, legac...":
+              - rowheader "test_models"
+              - cell "[dummy_prior, logistic, legacy_lightgbm, legac..."
+            - 'row "thresholds {''dummy_prior'': 0.5, ''logistic'': 0.30227866330..."':
+              - rowheader "thresholds"
+              - 'cell "{''dummy_prior'': 0.5, ''logistic'': 0.30227866330..."'
+            - row "extra_mlp_seeds [43, 44]":
+              - rowheader "extra_mlp_seeds"
+              - cell "[43, 44]"
+            - row "split_ids_sha256 8b65a245597770268e00fc818f7705fd6b958b02679fd5...":
+              - rowheader "split_ids_sha256"
+              - cell "8b65a245597770268e00fc818f7705fd6b958b02679fd5..."
+  - 'region "Ô 10: Ô chứa văn bản: Filtered official test and three MLP seeds"':
+    - generic "Thu gọn 1 ô con trong Filtered official test and three MLP seeds (Nhấn phím <Shift> để thu gọn cả các mục đồng cấp)":
+      - button "Thu gọn 1 ô con trong Filtered official test and three MLP seeds (Nhấn phím <Shift> để thu gọn cả các mục đồng cấp)"
+    - heading "Filtered official test and three MLP seeds" [level=2]
+    - paragraph: "These are the experiment selected above: recorded by default, freshly trained only when reuse is disabled. Scores refer to a previously observed public test, not independent confirmation."
+  - 'region "Ô 11: Ô chứa mã:"':
+    - button "Chạy ô":
+    - generic: "[6]"
+    - generic: 0 giây
+    - generic: display(pd.DataFrame(report['test']).T[['accuracy', 'average_precision', 'roc_auc', 'f1_positive']])
+    - generic: display(pd.DataFrame(report['selected_mlp_seed_repeats'])[['seed', 'accuracy', 'average_precision', 'roc_auc']])
+    - generic: assert all(report['checks'].values())
+    - generic: "print('ADULT_REPORT_VERIFIED: recorded/fresh protocol checks passed')"
+    - region "Đầu ra của ô 11":
+      - generic "Ẩn/hiện kết quả":
+        - button "Ẩn/hiện kết quả"
+      - generic "Thao tác đối với kết quả của ô mã":
+        - button "Thao tác đối với kết quả của ô mã"
+      - iframe:
+        - table:
+          - rowgroup:
+            - row "accuracy average_precision roc_auc f1_positive":
+              - columnheader
+              - columnheader "accuracy"
+              - columnheader "average_precision"
+              - columnheader "roc_auc"
+              - columnheader "f1_positive"
+          - rowgroup:
+            - row "dummy_prior 0.763739 0.236261 0.5 0.0":
+              - rowheader "dummy_prior"
+              - cell "0.763739"
+              - cell "0.236261"
+              - cell "0.5"
+              - cell "0.0"
+            - row "logistic 0.829466 0.762987 0.905478 0.685435":
+              - rowheader "logistic"
+              - cell "0.829466"
+              - cell "0.762987"
+              - cell "0.905478"
+              - cell "0.685435"
+            - row "legacy_lightgbm 0.842944 0.821314 0.925387 0.715369":
+              - rowheader "legacy_lightgbm"
+              - cell "0.842944"
+              - cell "0.821314"
+              - cell "0.925387"
+              - cell "0.715369"
+            - row "legacy_mlp 0.813035 0.771856 0.908852 0.682151":
+              - rowheader "legacy_mlp"
+              - cell "0.813035"
+              - cell "0.771856"
+              - cell "0.908852"
+              - cell "0.682151"
+            - row "lightgbm_small_leaves 0.867253 0.826091 0.927633 0.722215":
+              - rowheader "lightgbm_small_leaves"
+              - cell "0.867253"
+              - cell "0.826091"
+              - cell "0.927633"
+              - cell "0.722215"
+            - row "mlp_128_64 0.840852 0.776163 0.910312 0.693602":
+              - rowheader "mlp_128_64"
+              - cell "0.840852"
+              - cell "0.776163"
+              - cell "0.910312"
+              - cell "0.693602"
+        - button "Convert this dataframe to an interactive table.":
+        - table:
+          - rowgroup:
+            - row "seed accuracy average_precision roc_auc":
+              - columnheader
+              - columnheader "seed"
+              - columnheader "accuracy"
+              - columnheader "average_precision"
+              - columnheader "roc_auc"
+          - rowgroup:
+            - row "0 42 0.840852 0.776163 0.910312":
+              - rowheader "0"
+              - cell "42"
+              - cell "0.840852"
+              - cell "0.776163"
+              - cell "0.910312"
+            - row "1 43 0.844975 0.777277 0.910907":
+              - rowheader "1"
+              - cell "43"
+              - cell "0.844975"
+              - cell "0.777277"
+              - cell "0.910907"
+            - row "2 44 0.842698 0.776287 0.910316":
+              - rowheader "2"
+              - cell "44"
+              - cell "0.842698"
+              - cell "0.776287"
+              - cell "0.910316"
+        - generic: "ADULT_REPORT_VERIFIED: recorded/fresh protocol checks passed"
+  - 'region "Ô 12: Ô chứa văn bản: Actual experiment plot"':
+    - generic "Thu gọn 1 ô con trong Actual experiment plot (Nhấn phím <Shift> để thu gọn cả các mục đồng cấp)":
+      - button "Thu gọn 1 ô con trong Actual experiment plot (Nhấn phím <Shift> để thu gọn cả các mục đồng cấp)"
+    - heading "Actual experiment plot" [level=2]
+    - paragraph: The MLP remains behind LightGBM. Accuracy differences also reflect validation-selected thresholds. One split and three seeds do not establish generalization to current populations.
+  - 'region "Ô 13: Ô chứa mã:"':
+    - button "Chạy ô":
+    - generic: "[7]"
+    - generic: 0 giây
+    - generic: display(Image(filename=str(OUT / 'comparison.png')))
+    - generic: display(pd.Series(report['environment']).to_frame('Experiment environment'))
+    - region "Đầu ra của ô 13":
+      - generic "Ẩn/hiện kết quả":
+        - button "Ẩn/hiện kết quả"
+      - generic "Thao tác đối với kết quả của ô mã":
+        - button "Thao tác đối với kết quả của ô mã"
+      - iframe:
+        - table:
+          - rowgroup:
+            - row "Experiment environment":
+              - columnheader
+              - columnheader "Experiment environment"
+          - rowgroup:
+            - row "python 3.12.0 (tags/v3.12.0:0fb18b0, Oct 2 2023, 13:...":
+              - rowheader "python"
+              - cell "3.12.0 (tags/v3.12.0:0fb18b0, Oct 2 2023, 13:..."
+            - row "torch_device cpu":
+              - rowheader "torch_device"
+              - cell "cpu"
+            - row "threads 4":
+              - rowheader "threads"
+              - cell "4"
+            - 'row "packages {''torch'': ''2.9.1'', ''scikit-learn'': ''1.7.2'', ''l..."':
+              - rowheader "packages"
+              - 'cell "{''torch'': ''2.9.1'', ''scikit-learn'': ''1.7.2'', ''l..."'
+        - button "Convert this dataframe to an interactive table.":

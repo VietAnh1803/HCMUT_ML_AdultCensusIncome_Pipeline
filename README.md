@@ -1,5 +1,9 @@
 # Adult Income: classical ML, PyTorch and local evaluation
 
+**Evaluation walkthrough:** [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/VietAnh1803/HCMUT_ML_AdultCensusIncome_Pipeline/blob/main/notebooks/adult_income_improved.ipynb)
+
+**Original coursework:** [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/VietAnh1803/HCMUT_ML_AdultCensusIncome_Pipeline/blob/main/notebooks/tabular_data_pipeline.ipynb)
+
 [![Adult Income tests](https://github.com/VietAnh1803/HCMUT_ML_AdultCensusIncome_Pipeline/actions/workflows/tests.yml/badge.svg)](https://github.com/VietAnh1803/HCMUT_ML_AdultCensusIncome_Pipeline/actions/workflows/tests.yml)
 
 This project compares tabular classifiers on UCI Adult and examines how data
@@ -66,6 +70,9 @@ train-only preprocessing, known scorer outputs, CLI failures, deterministic MLP
 training, early-stopping patience/minimum delta and actual checkpoint weights.
 See [the case list](docs/test_coverage.md) and
 [`test_results.json`](reports/verification/test_results.json) for execution evidence.
+The earlier five-test report describes commit `9137c2a`. The current suite has
+11 `ProtocolTests` and 39 cases in four other classes, totaling 50 software checks;
+these counts are not numbers of ML experiments or independent evaluations.
 The [GitHub Actions workflow](.github/workflows/tests.yml) installs the pinned
 dependencies with CPU PyTorch and runs the same suite on Python 3.12/Linux. It
 checks that all 50 cases pass and reports the count in the job summary. Tests use
@@ -111,6 +118,34 @@ and paired bootstrap intervals are available in the recorded outputs.
 [Complete metrics](reports/improved/metrics.json)
 
 ## Reproduce
+
+### Google Colab
+
+Click **Open in Colab** above, choose a **CPU** runtime and **Run all**.
+The evaluation notebook locates or clones this repository and installs its pinned
+dependencies automatically on Colab before importing the data libraries. Its
+generator embeds the same requirement pins so a downloaded notebook can be
+verified before the matching repository update is published. Python 3.12 uses
+NumPy 1.26.4; Python 3.13 selects NumPy 2.2.6, which has compatible binary wheels.
+The recorded model experiment remains a Python 3.12 run. Installation uses
+binary wheels and bounded timeouts instead of silently compiling unsupported versions.
+By default, the notebook displays the recorded experiment and executes the 50 tests and the
+public-validation scoring demo. It clearly labels recorded scores.
+
+On 12 October 2026, the updated seven-code-cell notebook completed on a clean
+Google Colab CPU runtime (Python 3.13.16): 50/50 tests and fresh scoring of 6,508
+validation rows, AP 0.782419. This smoke test did not retrain the benchmark models.
+See [the separate Colab verification record](reports/verification/colab_verification.json).
+
+Set `REUSE_RECORDED_RUN = False` to retrain the frozen benchmark on official UCI
+data. Training runs in a fresh Python subprocess and writes separate outputs;
+the recorded experiment is preserved. Colab requires an Internet connection for
+the public source, dependencies and dataset, but no Kaggle token or Drive mount.
+
+The second button opens the original coursework notebook, whose training and
+test-selection recipe is preserved. Its results use a different protocol.
+
+### Local Python
 
 Tested with Python 3.12 on CPU; no GPU or token is needed. From the repository root:
 
@@ -166,6 +201,7 @@ tests/
   test_fitting_and_integration.py   # stopping/restoration, data boundaries and CLI
 tools/
   build_delivery.py                 # report/bootstrap/notebook entry point
+  notebook.py                       # shared Colab/local notebook generator
   evidence.py                       # recorded-results plots and verification notes
   run_tests.py                      # run all cases and write per-case outcomes
 docs/

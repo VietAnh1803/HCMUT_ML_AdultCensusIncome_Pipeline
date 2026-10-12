@@ -141,9 +141,10 @@ def build_evidence(root: Path, output: Path, baseline_path: Path | None = None) 
               'python src/local_evaluation.py score --labels .cache/local-evaluation/evaluation_labels.csv --predictions .cache/local-evaluation/reference_predictions.csv --output .cache/local-evaluation/reference_score.json',
               'python tools/build_delivery.py --input .cache/fitting-verified-run --baseline .cache/audit-baseline/metrics.json', '```', '',
               'The delivery tool copies completed outputs to reports/improved, produces actual '
-              'plots and executes a five-cell recorded-results walkthrough. That execution is not '
+              'plots and executes a seven-code-cell walkthrough with tests and public-validation scoring. Default execution is not '
               'a retraining run. Test, experiment and CLI execution results are recorded in '
-              'reports/verification/verification.json.']
+              'reports/verification/verification.json; notebook cold-start and Colab checks are '
+              'distinguished in reports/verification/colab_verification.json.']
     tests = json.loads((root / 'reports/verification/test_results.json').read_text(encoding='utf-8'))
     candidates = {row['name']: row for row in report['validation_experiments']}
     best_c, best_m = candidates[classic], candidates[mlp]

@@ -108,40 +108,16 @@ def main():
               'Raw data and local prediction files are excluded from the repository.']
     (ROOT / 'reports/IMPROVEMENT_REPORT.md').write_text('\n'.join(lines)+'\n', encoding='utf-8')
 
-    nb = nbf.v4.new_notebook()
-    md, code = nbf.v4.new_markdown_cell, nbf.v4.new_code_cell
-    nb.cells = [md('# Adult Income: Classical ML and PyTorch\n\nA post-coursework extension with validation-only selection, a separate official UCI test, and three DL seeds. '
-                   'Original coursework is preserved. This notebook uses the modular source in `src/adult_benchmark.py`.\n\n'
-                   'Install dependencies with `%pip install -r requirements-improved.txt` if needed. CPU is sufficient.'),
-        code("from pathlib import Path\nimport sys\nimport json\nimport subprocess\nimport pandas as pd\nfrom IPython.display import display, Image\n\n"
-             "ROOT = next((p for p in [Path.cwd(), *Path.cwd().parents] if (p / 'src/adult_benchmark.py').exists()), None)\n"
-             "if ROOT is None:\n    ROOT = Path.cwd() / 'adult-income-project'\n    subprocess.run(['git', 'clone', 'https://github.com/VietAnh1803/HCMUT_ML_AdultCensusIncome_Pipeline.git', str(ROOT)], check=True)\n"
-             "sys.path.insert(0, str(ROOT / 'src'))\nOUT = ROOT / 'reports/improved'\nprint('Source:', ROOT)"),
-        md('## Run or inspect a recorded experiment\nThe shipped results are from the actual CPU experiment. Reuse is explicit; turn it off to download the official data and train again. '
-           'Training and threshold selection finish before final test labels are parsed.'),
-        code("REUSE_RECORDED_RUN = True\nif not REUSE_RECORDED_RUN or not (OUT / 'metrics.json').exists():\n"
-             "    from adult_benchmark import main\n    main(OUT, ROOT / '.cache/adult')\n"
-             "else:\n    print('Reusing the recorded, verified CPU run; this cell does not retrain.')\n"
-             "report = json.loads((OUT / 'metrics.json').read_text())\ndisplay(pd.Series(report['split']).to_frame('Split evidence'))"),
-        md('## Validation comparison\nSelect on AP. The two legacy recipes are predefined controls. No test score is used here.'),
-        code("validation = pd.json_normalize(report['validation_experiments'])\ndisplay(validation[['name', 'family', 'validation.average_precision', 'validation.roc_auc', 'fit_seconds']].sort_values('validation.average_precision', ascending=False))\ndisplay(pd.Series(report['selection']).to_frame('Frozen choices'))"),
-        md('## Final test and DL stability\nSelected models, controls and two predeclared baselines are graded. These are distinct from historical coursework scores.'),
-        code("display(pd.DataFrame(report['test']).T[['accuracy', 'average_precision', 'roc_auc', 'f1_positive', 'f1_macro', 'log_loss']])\ndisplay(pd.DataFrame(report['selected_mlp_seed_repeats'])[['seed', 'accuracy', 'average_precision', 'roc_auc']])\nassert all(report['checks'].values())\nprint('ADULT_REPORT_VERIFIED: all recorded protocol checks passed')"),
-        md('## Measured comparison\nAccuracy gains include validation threshold changes. AP gains are modest, and the MLP does not outperform LightGBM. '
-           'See the improvement report and paired bootstrap for uncertainty. This 1994 census dataset is a historical learning benchmark.'),
-        code("display(Image(filename=str(OUT / 'comparison.png')))\ndisplay(pd.Series(report['environment']).to_frame('Recorded environment'))"),
-    ]
-    nb.metadata.kernelspec = {'display_name': 'Python 3', 'language': 'python', 'name': 'python3'}
-    nb.metadata.language_info = {'name': 'python'}
-    nbf.validate(nb)
+    from notebook import create_notebook
+    nb = create_notebook()
     nbf.write(nb, ROOT / 'notebooks/adult_income_improved.ipynb')
     if sys.platform == 'win32':
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    executed = NotebookClient(nb, timeout=120, kernel_name='python3', resources={'metadata': {'path': str(ROOT)}}).execute()
+    executed = NotebookClient(nb, timeout=1800, kernel_name='python3', resources={'metadata': {'path': str(ROOT)}}).execute()
     assert all(c.execution_count is not None for c in executed.cells if c.cell_type == 'code')
     assert not any(o.output_type == 'error' for c in executed.cells if c.cell_type == 'code' for o in c.outputs)
     nbf.write(executed, OUT / 'executed_adult_income_improved.ipynb')
-    print('Built report, paired bootstrap and notebook; five code cells executed successfully.')
+    print('Built report, paired bootstrap and notebook; seven code cells executed successfully.')
 
     from evidence import build_evidence
     build_evidence(ROOT, OUT, args.baseline)

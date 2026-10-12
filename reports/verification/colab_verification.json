@@ -1,0 +1,195 @@
+{
+  "date": "2026-10-12",
+  "public_source_commit": "8d1fb13f7e98a5397c05df165491d4aeb7aed914",
+  "original_coursework_notebook": "preserved; not re-executed in this audit",
+  "publication": "local changes only; approval required",
+  "release_verification_2026_10_12": {
+    "date": "2026-10-12",
+    "notebook_sha256": "cb85d6c1e59b737972970d67856f3c612aceba563726fca273cd57d53107dfab",
+    "actual_google_colab": {
+      "executed": true,
+      "code_cells": 7,
+      "execution_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "errors_observed": 0,
+      "runtime": "Python 3.13.16, Linux, CPU",
+      "installed_packages": {
+        "numpy": "2.2.6",
+        "pandas": "2.3.2",
+        "scikit-learn": "1.7.2",
+        "torch": "2.9.1+cpu",
+        "lightgbm": "4.6.0"
+      },
+      "clean_runtime": true,
+      "source_cloned_from_public_main": true,
+      "public_main_sha_observed": "8d1fb13f7e98a5397c05df165491d4aeb7aed914",
+      "tests_passed": 50,
+      "scoring_rows": 6508,
+      "validation_ap_displayed": 0.782419,
+      "benchmark_retrained": false,
+      "viewed_recorded_test_metrics": true,
+      "verification_method": "visible notebook cell outputs, counters, markers and score table",
+      "evidence": "reports/verification/colab_visible_output.txt",
+      "screenshot": "reports/verification/colab_scoring.jpg",
+      "private_drive_notebook_created": true,
+      "shared_publicly": false,
+      "ipynb_download": "browser download event timed out; raw Colab notebook export not recovered",
+      "temporary_runtime_terminated": true
+    },
+    "first_attempt": {
+      "completed": false,
+      "status": "interrupted during old setup; session-control error resolved after refresh",
+      "issue": "old numpy1.26 pin unsupported on current Python3.13; patched NumPy marker and wheel-only installer"
+    },
+    "local_notebook": {
+      "code_cells": 7,
+      "errors": 0,
+      "cold_working_directory": true,
+      "notebook_sha256": "cb85d6c1e59b737972970d67856f3c612aceba563726fca273cd57d53107dfab",
+      "tests_passed": 50,
+      "score": {
+        "primary_metric": "average_precision",
+        "higher_is_better": true,
+        "evaluation_scope": "local public validation demonstration",
+        "accuracy": 0.8574062692071297,
+        "average_precision": 0.782419345529856,
+        "roc_auc": 0.910775221019582,
+        "precision_positive": 0.743161094224924,
+        "recall_positive": 0.6237244897959183,
+        "f1_positive": 0.6782246879334258,
+        "f1_macro": 0.7933168445588961,
+        "log_loss": 0.3114447775335062,
+        "threshold": 0.5,
+        "confusion_matrix": [
+          [
+            4602,
+            338
+          ],
+          [
+            590,
+            978
+          ]
+        ],
+        "class_counts": {
+          "0": 4940,
+          "1": 1568
+        },
+        "n": 6508
+      },
+      "benchmark_retrained": false,
+      "dependency_installation_branch": false,
+      "runtime": "3.12.0 (tags/v3.12.0:0fb18b0, Oct  2 2023, 13:03:39) [MSC v.1935 64 bit (AMD64)]"
+    },
+    "publication": "no push, deploy, profile save or application submission"
+  },
+  "historical_five_cell_colab": {
+    "source": "published five-code-cell notebook at 8d1fb13",
+    "run_all_completed": true,
+    "code_cells": 5,
+    "errors_observed": 0,
+    "mode": "recorded-results walkthrough",
+    "retrained_models": false,
+    "new_seven_cell_notebook_executed_on_colab": false,
+    "new_colab_dependency_installation_verified": false,
+    "saved_to_github_or_drive": false,
+    "temporary_runtime_terminated": true
+  },
+  "historical_local_cold_kernel": {
+    "notebook": "notebooks/adult_income_improved.ipynb",
+    "executed": true,
+    "code_cells": 7,
+    "errors": 0,
+    "empty_working_directory": true,
+    "cloned_public_source": true,
+    "dependencies": "preinstalled local Python 3.12; Colab installation branch not exercised",
+    "tests_passed": 50,
+    "validation_rows_scored": 6508,
+    "logistic_validation_ap": 0.782419345529856,
+    "retrained_models": false,
+    "executed_artifact": "reports/improved/executed_adult_income_improved.ipynb"
+  },
+  "actual_google_colab": {
+    "executed": true,
+    "code_cells": 7,
+    "execution_counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "errors_observed": 0,
+    "runtime": "Python 3.13.16, Linux, CPU",
+    "installed_packages": {
+      "numpy": "2.2.6",
+      "pandas": "2.3.2",
+      "scikit-learn": "1.7.2",
+      "torch": "2.9.1+cpu",
+      "lightgbm": "4.6.0"
+    },
+    "clean_runtime": true,
+    "source_cloned_from_public_main": true,
+    "public_main_sha_observed": "8d1fb13f7e98a5397c05df165491d4aeb7aed914",
+    "tests_passed": 50,
+    "scoring_rows": 6508,
+    "validation_ap_displayed": 0.782419,
+    "benchmark_retrained": false,
+    "viewed_recorded_test_metrics": true,
+    "verification_method": "visible notebook cell outputs, counters, markers and score table",
+    "evidence": "reports/verification/colab_visible_output.txt",
+    "screenshot": "reports/verification/colab_scoring.jpg",
+    "private_drive_notebook_created": true,
+    "shared_publicly": false,
+    "ipynb_download": "browser download event timed out; raw Colab notebook export not recovered",
+    "temporary_runtime_terminated": true
+  },
+  "local_cold_kernel": {
+    "code_cells": 7,
+    "errors": 0,
+    "cold_working_directory": true,
+    "notebook_sha256": "cb85d6c1e59b737972970d67856f3c612aceba563726fca273cd57d53107dfab",
+    "tests_passed": 50,
+    "score": {
+      "primary_metric": "average_precision",
+      "higher_is_better": true,
+      "evaluation_scope": "local public validation demonstration",
+      "accuracy": 0.8574062692071297,
+      "average_precision": 0.782419345529856,
+      "roc_auc": 0.910775221019582,
+      "precision_positive": 0.743161094224924,
+      "recall_positive": 0.6237244897959183,
+      "f1_positive": 0.6782246879334258,
+      "f1_macro": 0.7933168445588961,
+      "log_loss": 0.3114447775335062,
+      "threshold": 0.5,
+      "confusion_matrix": [
+        [
+          4602,
+          338
+        ],
+        [
+          590,
+          978
+        ]
+      ],
+      "class_counts": {
+        "0": 4940,
+        "1": 1568
+      },
+      "n": 6508
+    },
+    "benchmark_retrained": false,
+    "dependency_installation_branch": false,
+    "runtime": "3.12.0 (tags/v3.12.0:0fb18b0, Oct  2 2023, 13:03:39) [MSC v.1935 64 bit (AMD64)]"
+  },
+  "latest_record": "release_verification_2026_10_12"
+}
