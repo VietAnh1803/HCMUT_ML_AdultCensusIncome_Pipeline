@@ -1,0 +1,213 @@
+{
+  "run_utc": "2026-10-12T09:06:47.321499+00:00",
+  "python": "3.12.0 (tags/v3.12.0:0fb18b0, Oct  2 2023, 13:03:39) [MSC v.1935 64 bit (AMD64)]",
+  "command": "python tools/run_tests.py",
+  "tests_run": 50,
+  "passed": 50,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "successful": true,
+  "cases": [
+    {
+      "id": "test_evaluation.EvaluationTests.test_constant_probability_baseline",
+      "status": "passed"
+    },
+    {
+      "id": "test_evaluation.EvaluationTests.test_invalid_threshold",
+      "status": "passed"
+    },
+    {
+      "id": "test_evaluation.EvaluationTests.test_missing_extra_duplicate_and_blank_ids",
+      "status": "passed"
+    },
+    {
+      "id": "test_evaluation.EvaluationTests.test_nan_infinite_out_of_range_and_nonnumeric_predictions",
+      "status": "passed"
+    },
+    {
+      "id": "test_evaluation.EvaluationTests.test_perfect_score_and_order_independent_join",
+      "status": "passed"
+    },
+    {
+      "id": "test_evaluation.EvaluationTests.test_schema_and_target_errors",
+      "status": "passed"
+    },
+    {
+      "id": "test_evaluation.EvaluationTests.test_wrong_ranking_known_average_precision",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.DataBoundaryTests.test_categorical_missing_values_have_explicit_encoding",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.DataBoundaryTests.test_conflicting_duplicate_keeps_first_label",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.DataBoundaryTests.test_empty_feature_matrix_is_rejected",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.DataBoundaryTests.test_feature_column_order_is_enforced",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.DataBoundaryTests.test_loader_rejects_missing_label",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.DataBoundaryTests.test_loader_rejects_missing_numeric_feature",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.DataBoundaryTests.test_missing_category_feature_matches_are_detected",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.DataBoundaryTests.test_numeric_imputation_uses_training_median",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.DataBoundaryTests.test_stratified_split_preserves_minority_proportion",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.FittingTests.test_best_checkpoint_weights_are_restored",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.FittingTests.test_epoch_budget_still_restores_best_checkpoint",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.FittingTests.test_flat_validation_stops_after_patience",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.FittingTests.test_invalid_training_arrays_fail_before_fit",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.FittingTests.test_invalid_training_configuration_fails_before_fit",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.FittingTests.test_legacy_control_retains_final_epoch_without_early_stopping",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.FittingTests.test_legacy_inference_returns_positive_softmax_probability",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.FittingTests.test_min_delta_requires_strict_improvement",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.FittingTests.test_mlp_inference_rejects_empty_vector_and_nonfinite_inputs",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.FittingTests.test_modern_optimizer_applies_weight_decay",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.FittingTests.test_tiny_validation_changes_do_not_reset_patience",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.FittingTests.test_training_same_seed_reproduces_weights_and_history",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.FittingTests.test_validation_improvement_resets_patience",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.LocalIntegrationTests.test_cli_invalid_submission_exits_two_without_new_score",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.LocalIntegrationTests.test_cli_scores_csv_and_writes_finite_json",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.LocalIntegrationTests.test_id_string_normalization_rejects_collisions",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.LocalIntegrationTests.test_prepare_is_byte_reproducible",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.LocalIntegrationTests.test_prepare_separates_public_labels_and_never_reads_test",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.LocalIntegrationTests.test_reference_reads_only_train_and_feature_files",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.LocalIntegrationTests.test_reference_rejects_feature_overlap_under_different_ids",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.LocalIntegrationTests.test_reference_rejects_id_overlap",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.LocalIntegrationTests.test_reference_rejects_invalid_training_labels",
+      "status": "passed"
+    },
+    {
+      "id": "test_fitting_and_integration.LocalIntegrationTests.test_reference_rejects_label_leakage_in_features",
+      "status": "passed"
+    },
+    {
+      "id": "test_protocol.ProtocolTests.test_bad_label_is_rejected",
+      "status": "passed"
+    },
+    {
+      "id": "test_protocol.ProtocolTests.test_duplicate_observations_are_distinct_from_label_conflicts",
+      "status": "passed"
+    },
+    {
+      "id": "test_protocol.ProtocolTests.test_features_require_schema_and_finite_numerics",
+      "status": "passed"
+    },
+    {
+      "id": "test_protocol.ProtocolTests.test_keys_ignore_row_index_and_find_duplicate_features",
+      "status": "passed"
+    },
+    {
+      "id": "test_protocol.ProtocolTests.test_loader_rejects_missing_and_extra_columns",
+      "status": "passed"
+    },
+    {
+      "id": "test_protocol.ProtocolTests.test_mlp_inference_is_deterministic_and_bounded",
+      "status": "passed"
+    },
+    {
+      "id": "test_protocol.ProtocolTests.test_official_label_normalization_and_missing_value",
+      "status": "passed"
+    },
+    {
+      "id": "test_protocol.ProtocolTests.test_scorer_rejects_invalid_shapes_and_probabilities",
+      "status": "passed"
+    },
+    {
+      "id": "test_protocol.ProtocolTests.test_split_determinism_and_feature_disjointness",
+      "status": "passed"
+    },
+    {
+      "id": "test_protocol.ProtocolTests.test_transform_does_not_learn_test_categories_or_statistics",
+      "status": "passed"
+    },
+    {
+      "id": "test_protocol.ProtocolTests.test_validation_threshold_maximizes_positive_f1",
+      "status": "passed"
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "date": "2026-10-12",
+  "tests": {
+    "command": "python tools/run_tests.py",
+    "passed": 50,
+    "failed": 0,
+    "skipped": 0,
+    "per_case_record": "reports/verification/test_results.json",
+    "groups": {
+      "EvaluationTests": 7,
+      "DataBoundaryTests": 9,
+      "FittingTests": 13,
+      "LocalIntegrationTests": 10,
+      "ProtocolTests": 11
+    },
+    "run_utc": "2026-10-12T09:06:47.321499+00:00"
+  },
+  "full_runs": [
+    {
+      "source": "9137c2a unchanged",
+      "output": ".cache/audit-baseline",
+      "completed": true
+    },
+    {
+      "source": "revised working tree",
+      "output": ".cache/verified-run",
+      "completed": true
+    },
+    {
+      "source": "working tree with fitting diagnostics; unchanged model recipes",
+      "output": ".cache/fitting-verified-run",
+      "completed": true
+    }
+  ],
+  "headline_metrics_reproduced": true,
+  "reference_repeat_byte_identical": true,
+  "invalid_cli_exit": 2,
+  "invalid_cli_created_score": false,
+  "notebook": {
+    "cells_executed": 5,
+    "errors": 0,
+    "retraining": false,
+    "complete_delivery_command_passed": true
+  },
+  "python_compileall_passed": true,
+  "publication": {
+    "pushed": false,
+    "deployed": false,
+    "scope": "State at the local audit, before GitHub synchronization"
+  },
+  "final_review": {
+    "cross_partition_feature_pairs": 28,
+    "same_label_pairs": 25,
+    "different_label_pairs": 3,
+    "consistency_claim_categories": 15,
+    "portfolio_lint": true,
+    "portfolio_format_check": true,
+    "portfolio_build": true,
+    "rendered_viewports": [
+      320,
+      390,
+      768,
+      1440
+    ],
+    "themes": [
+      "dark",
+      "light"
+    ],
+    "resume_pages": 1,
+    "detailed_resume_pages": 2
+  },
+  "fitting_diagnostics": {
+    "checkpoint_validation_ap_matches_recorded_selected_epoch": true,
+    "selected_mlp_epochs_run": 15,
+    "selected_mlp_restored_epoch": 8,
+    "all_headline_and_seed_metrics_match_previous_verified_run": true,
+    "candidates": {
+      "dummy_prior": {
+        "train_minus_validation_ap": -3.981339560657493e-05,
+        "validation_minus_train_log_loss": 4.569710353319323e-05
+      },
+      "logistic": {
+        "train_minus_validation_ap": -0.014899925564881622,
+        "validation_minus_train_log_loss": -0.006474057742460071
+      },
+      "linear_svm": {
+        "train_minus_validation_ap": -0.014703132896884519,
+        "validation_minus_train_log_loss": -0.006512556260508562
+      },
+      "random_forest": {
+        "train_minus_validation_ap": 0.0202639673254722,
+        "validation_minus_train_log_loss": 0.01774318160824706
+      },
+      "legacy_lightgbm": {
+        "train_minus_validation_ap": 0.02726200640979637,
+        "validation_minus_train_log_loss": 0.03099804492956504
+      },
+      "lightgbm_regularized": {
+        "train_minus_validation_ap": 0.030315830947170608,
+        "validation_minus_train_log_loss": 0.029252663014529612
+      },
+      "lightgbm_small_leaves": {
+        "train_minus_validation_ap": 0.017481552222636143,
+        "validation_minus_train_log_loss": 0.017703953308004228
+      },
+      "legacy_mlp": {
+        "train_minus_validation_ap": 0.016827855598134822,
+        "validation_minus_train_log_loss": 0.028240263639842555
+      },
+      "mlp_64_32": {
+        "train_minus_validation_ap": 0.0072494893588394005,
+        "validation_minus_train_log_loss": 0.009002467637392653
+      },
+      "mlp_128_64": {
+        "train_minus_validation_ap": 0.00245921463696519,
+        "validation_minus_train_log_loss": 0.00478362435459917
+      }
+    },
+    "absence_of_overfitting_or_underfitting_proven": false
+  },
+  "source_files_sha256": {
+    "src/adult_benchmark.py": "3d815e4a29a540af380faf5aaeeec984218dee9b2d6ccb1769b97a57bd931215",
+    "src/local_evaluation.py": "94e98914586210d7ebe62a7943529262c5c91029697a8e9705928bddf98e1304",
+    "tests/test_evaluation.py": "85cc5fc410b93515780d732a0a0641e8ea1205d531170db633c4c1eeea36d482",
+    "tests/test_fitting_and_integration.py": "f379042b4db12d5dacca32e19cc4c248b1385f87c40f5ac0972ce91b9a30d6a7",
+    "tests/test_protocol.py": "0619d831210e483154d5259edaec017a29c6fb86aff3b84c9b02d6a46c1780a1"
+  },
+  "reference_after_overlap_guard_byte_identical": true,
+  "publication_preflight": {
+    "checked_utc": "2026-10-12T09:09:22.233808+00:00",
+    "local_tests_run": 50,
+    "local_tests_passed": 50,
+    "scoring_cli_sequence_passed": true,
+    "local_reference_average_precision": 0.782419345529856,
+    "local_reference_rows": 6508,
+    "headline_metrics_unchanged": true,
+    "ci_workflow_added": true
+  },
+  "source_hash_normalization": "UTF-8 source text with LF line endings"
+}

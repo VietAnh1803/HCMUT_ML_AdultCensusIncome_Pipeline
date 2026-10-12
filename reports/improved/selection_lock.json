@@ -3,12 +3,15 @@
   "best_classic": "lightgbm_small_leaves",
   "best_mlp": "mlp_128_64",
   "test_models": [
+    "dummy_prior",
+    "logistic",
     "legacy_lightgbm",
     "legacy_mlp",
     "lightgbm_small_leaves",
     "mlp_128_64"
   ],
   "thresholds": {
+    "dummy_prior": 0.5,
     "logistic": 0.3022786633024744,
     "linear_svm": 0.286672064393253,
     "random_forest": 0.3779459758734919,

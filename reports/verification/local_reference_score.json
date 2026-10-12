@@ -1,0 +1,29 @@
+{
+  "primary_metric": "average_precision",
+  "higher_is_better": true,
+  "evaluation_scope": "local public validation demonstration",
+  "accuracy": 0.8574062692071297,
+  "average_precision": 0.782419345529856,
+  "roc_auc": 0.910775221019582,
+  "precision_positive": 0.743161094224924,
+  "recall_positive": 0.6237244897959183,
+  "f1_positive": 0.6782246879334258,
+  "f1_macro": 0.7933168445588961,
+  "log_loss": 0.3114447775335062,
+  "threshold": 0.5,
+  "confusion_matrix": [
+    [
+      4602,
+      338
+    ],
+    [
+      590,
+      978
+    ]
+  ],
+  "class_counts": {
+    "0": 4940,
+    "1": 1568
+  },
+  "n": 6508
+}

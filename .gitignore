@@ -1,7 +1,11 @@
 venv/
+.venv/
 __pycache__/
 *.zip
 features/*.pkl
 features/*.pth
 .cache/
 reports/improved/test_predictions.csv
+reports/**/test_predictions.csv
+local-evaluation/
+*.log

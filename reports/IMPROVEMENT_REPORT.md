@@ -1,6 +1,6 @@
 # Adult Income: ML and Deep Learning Improvement
 
-Measured on 11 October 2026 on CPU. This is a post-coursework extension with AI assistance.
+Verified by a full CPU rerun on 12 October 2026. This is a post-coursework extension with AI assistance.
 
 ## Evaluation protocol
 
@@ -10,12 +10,14 @@ This extension uses the official UCI `adult.data` for training and validation an
 
 Training: 26,028; validation: 6,508; final test: 16,249. See the split manifest for counts, raw hashes and split hash.
 
-Nine configurations were evaluated on validation only: six classical pipelines and three PyTorch MLPs. Validation AP chooses one classical model and one MLP; validation positive-class F1 chooses their classification thresholds. The selection lock is written before parsing test labels. Only these selected models and the two predeclared legacy-recipe controls are evaluated on test.
+Ten configurations were evaluated on validation only: seven classical pipelines (including a prior-only dummy) and three PyTorch MLPs. Validation AP chooses one classical model and one MLP; validation positive-class F1 chooses their classification thresholds. The selection lock is written before parsing test labels. The selected models, two predeclared legacy controls, dummy and logistic baseline are evaluated on test.
 
 The controls use StandardScaler without PCA. LightGBM retains SMOTE and class balancing; the MLP retains SMOTE, weighted cross entropy, BatchNorm, dropout 0.3 and 12 epochs. They reproduce representative recipes, not every original preprocessing search or the unseeded historical DL run.
 
 ## Measured results
 
+- **dummy_prior**: accuracy 0.7637, AP 0.2363, ROC-AUC 0.5000, positive F1 0.0000, macro-F1 0.4330, log loss 0.5468.
+- **logistic**: accuracy 0.8295, AP 0.7630, ROC-AUC 0.9055, positive F1 0.6854, macro-F1 0.7842, log loss 0.3176.
 - **legacy_lightgbm**: accuracy 0.8429, AP 0.8213, ROC-AUC 0.9254, positive F1 0.7154, macro-F1 0.8035, log loss 0.3165.
 - **legacy_mlp**: accuracy 0.8130, AP 0.7719, ROC-AUC 0.9089, positive F1 0.6822, macro-F1 0.7749, log loss 0.3733.
 - **lightgbm_small_leaves**: accuracy 0.8673, AP 0.8261, ROC-AUC 0.9276, positive F1 0.7222, macro-F1 0.8175, log loss 0.2763.
@@ -38,7 +40,7 @@ The selected MLP was repeated with seeds 42, 43 and 44 without searching on test
 - lightgbm_small_leaves: paired row-bootstrap 95% AP-difference interval [0.00236, 0.00764] (500 draws).
 - mlp_128_64: paired row-bootstrap 95% AP-difference interval [0.00128, 0.00732] (500 draws).
 
-The MLP remains behind LightGBM. Small AP gains should be interpreted with their intervals. Row bootstrap assumes independent records; this dataset has no person identifiers to verify that assumption. The historical public dataset and one fixed validation split do not establish generalization to current populations. No new training configuration was chosen after viewing final test scores.
+The MLP remains behind LightGBM. Small AP gains should be interpreted with their intervals. Row bootstrap assumes independent records; this dataset has no person identifiers to verify that assumption. The historical public dataset and one fixed validation split do not establish generalization to current populations. The official test has already been observed. This rerun freezes the existing configurations; it is not a pristine holdout. Exact feature duplicates include conflicting labels resolved by file order. See docs/verified_results.md for the audit.
 
 ## Reproduce and inspect
 
